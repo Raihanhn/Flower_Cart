@@ -1,19 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Navbar.css";
 import { assets } from "../../assets/assets";
 import { MdOutlineSearch } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { FaShoppingBasket } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { StoreContext } from "../../context/StoreContext";
 
 const Navbar = ({ setShowLogin }) => {
+  const { getTotalCartAmount } = useContext(StoreContext);
   return (
     <div className="navbar">
       <Link to="/">
         <img src={assets.logo} alt="" className="logo" />
       </Link>
       <ul className="navbar-menu">
-        <li>Home</li>
+        <Link to="/">Home</Link>
         <li>About</li>
         <li>Service</li>
         <li>Blog</li>
@@ -26,7 +28,7 @@ const Navbar = ({ setShowLogin }) => {
             {" "}
             <FaShoppingBasket />
           </Link>
-          <div className="dot"></div>
+          <div className={getTotalCartAmount() === 0 ? "" : "dot"}></div>
         </div>
         <CgProfile onClick={() => setShowLogin(true)} />
       </div>
